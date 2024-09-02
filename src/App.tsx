@@ -41,7 +41,7 @@ export default function App() {
       setSubmitting(true);
       try {
         const res = await axios.post<unknown, { data: { status: boolean } }>(
-          'http://127.0.0.1:3000/user/delete-request',
+          `${process.env.API_URL}/user/delete-request`,
           formValues
         );
         console.log(res.data, 'FORM RESPONSE');
