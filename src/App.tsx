@@ -5,20 +5,8 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import Loader from './Loader';
 
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+const API_URL = process.env.REACT_APP_API_URL;
+
 const validationSchema = Yup.object().shape({
   reason: Yup.string(),
   email: Yup.string()
@@ -37,14 +25,12 @@ export default function App() {
     initialValues,
     validationSchema,
     onSubmit: async formValues => {
-      console.log('TRYING TO SUBMIT', formValues);
       setSubmitting(true);
       try {
         const res = await axios.post<unknown, { data: { status: boolean } }>(
-          `${process.env.API_URL}/user/delete-request`,
+          `${API_URL}/user/delete-request`,
           formValues
         );
-        console.log(res.data, 'FORM RESPONSE');
         setSuccess(!!res.data.status);
 
         setSubmitting(false);
